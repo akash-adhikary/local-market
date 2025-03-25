@@ -3,14 +3,12 @@ name: Copy Flutter Web Build to Docs
 on:
   push:
     branches:
-      - main  
       - akash_dev
-      - gh-pages
-  pull_request:
-    branches:
-      - main  
-      - akash_dev
-      - gh-pages
+  # pull_request:
+  #   branches:
+  #     - main  
+  #     - akash_dev
+  #     - gh-pages
 
 jobs:
   build_and_copy:

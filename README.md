@@ -117,4 +117,62 @@ Defines **structured data models**.
 This structure is **clean, modular, and future-proof**.  
 If you ever need to **add more features**, it will be **super easy to manage**! 🚀🔥  
 
-Would you like any modifications or improvements to this? 😊  
+
+
+# **Setting Up Flutter in GitHub Codespaces & Running a Web App**
+
+This guide walks you through installing Flutter (version 3.29.2) in GitHub Codespaces and running a web app.
+
+## **1. Install Flutter**
+```sh
+# Remove any existing Flutter installation (if applicable)
+sudo rm -rf /opt/flutter  
+
+# Clone the stable branch of Flutter (version 3.29.2)
+git clone https://github.com/flutter/flutter.git -b 3.29.2 --depth=1  
+
+# Move Flutter to /opt for global access
+sudo mv flutter /opt/  
+
+# Add Flutter to the system PATH
+echo 'export PATH="/opt/flutter/bin:$PATH"' >> ~/.bashrc  
+source ~/.bashrc  
+
+# Verify Flutter installation
+flutter --version  
+```
+
+## **2. Install Dependencies**
+```sh
+# Check required dependencies
+flutter doctor  
+
+# Fix common issues (if any)
+flutter doctor --fix  
+
+# Enable web support
+flutter config --enable-web  
+
+# Ensure the latest stable Flutter version is installed
+flutter upgrade  
+
+# Fetch dependencies for the project
+flutter pub get  
+```
+
+## **3. Run Flutter Web App in Codespaces**
+```sh
+flutter run -d web-server --web-port=8000  
+```
+
+## **4. Forward the Port in Codespaces**
+1. Open the **Ports** tab in Codespaces.
+2. Click **"Forward a Port"**, enter **8000**, and set visibility to **Public**.
+
+## **5. Open the Web App in Chrome**
+Copy the generated Codespaces URL (e.g., `https://your-codespace-id-8000.githubpreview.dev`) and open it in **Chrome**.
+
+---
+
+This ensures a smooth setup and run for Flutter in Codespaces. 🚀  
+Let me know if you need any modifications!

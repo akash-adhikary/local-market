@@ -25,7 +25,7 @@ jobs:
         with:
           flutter-version: "3.29.2"  # Set Flutter version explicitly
 
-      - name: Install Dependencies
+      - name: Install Dependencies #dome
         run: flutter pub get
 
       - name: Build Flutter Web App
@@ -53,3 +53,4 @@ jobs:
           git add docs/ || echo "No changes to add"
           git diff --cached --quiet || git commit -m "Automated: Copy build/web contents to docs"
           git push https://x-access-token:${GH_PAT}@github.com/teronaut/local-market.git HEAD:${{ github.ref }} || echo "No changes to push"
+          

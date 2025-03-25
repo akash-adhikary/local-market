@@ -29,7 +29,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Web App
-        run: flutter build web
+        run: fflutter build web --release --base-href=/local-market/
 
       - name: Copy Build Files to Docs
         run: |

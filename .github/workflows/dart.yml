@@ -3,15 +3,14 @@ name: Copy Flutter Web Build to Docs
 on:
   push:
     branches:
-      - main  # Run only when code is pushed to main
+      - main  
       - akash_dev
       - gh-pages
   pull_request:
     branches:
-      - main  # Run only when code is pushed to main
+      - main  
       - akash_dev
       - gh-pages
-  
 
 jobs:
   build_and_copy:
@@ -24,7 +23,7 @@ jobs:
       - name: Set Up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.29.2
+          flutter-version: "3.29.2"  # Set Flutter version explicitly
 
       - name: Install Dependencies
         run: flutter pub get
@@ -32,31 +31,25 @@ jobs:
       - name: Build Flutter Web App
         run: flutter build web
 
-      # - name: Copy Build Files to Docs
-      #   run: |
-      #     rm -rf docs  # Remove old docs folder
-      #     mkdir docs   # Create a new docs folder
-      #     cp -r build/web/* docs/  # Copy only contents of build/web
-
-      - name: Commit and Push Changes
+      - name: Copy Build Files to Docs
         run: |
           rm -rf docs  # Remove old docs folder
-          mkdir docs   # Create a new docs folder
+          mkdir -p docs  # Ensure the docs/ folder exists
           cp -r build/web/* docs/  # Copy only contents of build/web
+
+      - name: Commit and Push Changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add docs/
-          git commit -m "Automated: Copy build/web contents to docs"
-          git push origin HEAD:${{ github.ref }}
-          - name: Commit and Push Changes
-          env:
-            GH_PAT: ${{ secrets.GH_PAT }}
-          run: |
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            git add docs/
-            git commit -m "Automated: Copy build/web contents to docs" || echo "No changes to commit"
-            git push https://x-access-token:${GH_PAT}@github.com/teronaut/local-market.git HEAD:${{ github.ref }} || echo "No changes to push"
 
+          # Ensure the docs/ folder exists before adding
+          if [ ! -d "docs" ]; then
+            echo "docs/ folder does not exist. Creating it..."
+            mkdir docs
+          fi
 
-    
+          git add docs/ || echo "No changes to add"
+          git diff --cached --quiet || git commit -m "Automated: Copy build/web contents to docs"
+          git push https://x-access-token:${GH_PAT}@github.com/teronaut/local-market.git HEAD:${{ github.ref }} || echo "No changes to push"

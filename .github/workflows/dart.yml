@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main  # Run only when code is pushed to main
+      - akash_dev
+      - gh-pages
+  pull_request:
+    branches:
+      - main  # Run only when code is pushed to main
+      - akash_dev
+      - gh-pages
+  
 
 jobs:
   build_and_copy:
